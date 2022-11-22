@@ -51,12 +51,26 @@ struct npoly{
 	int degree;
 };
 
-extern void npoly_create(struct npoly*, int, ...);
+extern void npoly_fill(struct npoly*, int, ...);
+extern void npoly_create(struct npoly*, int);
+extern void npoly_derive(struct npoly*, struct npoly*);
 extern void npolycpy(struct npoly*, struct npoly*);
 extern double npoly_eval(struct npoly*, double);
+extern void npoly_add_ex(struct npoly*, struct npoly*, struct npoly*);
+extern void npoly_add(struct npoly*, struct npoly*);
 
+struct cb_args{
+	void* data;
+	int len; // size of data in bytes;
+};
 //TODO:
-//ncomp_newton
+//more poly functions (add, mul, combine, FFT maybe?)
+extern double ncomp_newton(double(*fun)(double, struct cb_args), double(*dfun)(double, struct cb_args), 
+		struct cb_args, double);
+extern double ncomp_newton_r(double(*fun)(double, struct cb_args), double(*dfun)(double, struct cb_args), 
+		struct cb_args, double, double);
+extern double ncomp_newton_er(double(*fun)(double, struct cb_args), double(*dfun)(double, struct cb_args), 
+		struct cb_args, double, double, struct nreport*);
 //ncomp_iteration
 
 #endif
