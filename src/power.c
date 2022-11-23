@@ -6,7 +6,10 @@
 
 double npowd(double a, int b){
 	if(b == 0) return 1;
-	if(b < 0) a= 1/a;
+	if(b < 0) {
+		a= 1/a;
+		b = -b;
+	}
 	double num = 1;
 	for(int i=0;i<b;i++){
 		num*=a;

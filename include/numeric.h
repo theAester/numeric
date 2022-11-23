@@ -31,6 +31,10 @@ extern double nsin(double);
 extern double nsin_e(double, double);
 extern double nsin_er(double, double, struct nreport*);
 
+extern double nsinc(double);
+extern double nsinc_e(double, double);
+extern double nsinc_er(double, double, struct nreport*);
+
 double comp_sin(double, double, struct nreport*);
 double comp_cos(double, double, struct nreport*);
 
@@ -58,6 +62,7 @@ extern void npolycpy(struct npoly*, struct npoly*);
 extern double npoly_eval(struct npoly*, double);
 extern void npoly_add_ex(struct npoly*, struct npoly*, struct npoly*);
 extern void npoly_add(struct npoly*, struct npoly*);
+extern void npoly_free(struct npoly*);
 
 struct cb_args{
 	void* data;

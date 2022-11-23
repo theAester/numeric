@@ -12,14 +12,13 @@ double nsinh_e(double num, double max_err){
 
 double nsinh_er(double num, double max_err, struct nreport* report){
 	double x = num;
-	double val = 0;
+	double val = x;
 	int n = 1;
 	num = num*num;
-	while(1){
-		val += x;
+	while(ABS(x) > max_err){
 		x *= num / (2*n*(2*n+1));
+		val += x;
 		n++;
-		if(ABS(x) < max_err) break;
 	}
 	if(report){
 		report->error = x;
@@ -39,14 +38,13 @@ double ncosh_e(double num, double max_err){
 
 double ncosh_er(double num, double max_err, struct nreport* report){
 	double x = 1;
-	double val = 0;
+	double val = x;
 	int n = 1;
 	num = num*num;
-	while(1){
-		val += x;
+	while(ABS(x) > max_err){
 		x *= num / (2*n*(2*n-1));
+		val += x;
 		n++;
-		if(ABS(x) < max_err) break;
 	}
 	if(report){
 		report->error = x;

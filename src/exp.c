@@ -12,13 +12,14 @@ double nexp_e(double num, double max_err){
 }
 
 double nexp_er(double num, double max_err, struct nreport* report){
-	double x = 1;
-	double val = 1;
-	int n = 1;
 	int floor = num;
 	num = num - floor;
 	double big = npowd(M_E, floor);
 	max_err /= big;
+
+	double x = 1;
+	double val = 1;
+	int n = 1;
 	while(ABS(x) > max_err){
 		x *= num / n;
 		val += x;

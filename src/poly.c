@@ -30,6 +30,7 @@ void npolycpy(struct npoly* dest, struct npoly* src){
 	int d = src->degree +1;
 	dest->coeffs = (double*)malloc(d*sizeof(double));
 	memcpy(dest->coeffs, src->coeffs, d*sizeof(double));
+	return;
 }
 
 double npoly_eval(struct npoly* poly, double at){
@@ -71,11 +72,19 @@ void npoly_add_ex(struct npoly* c, struct npoly* a,struct npoly* b){ // c <- a+b
 /////// AAAAAAAAAAA //////////////
 void npoly_derive(struct npoly* dest, struct npoly* src){
 	if(dest->degree + 1 < src->degree){
-		//TODO: exceptions stuff
+		//TODO: exception stuff
 	}
 	int c = src->degree;
 	for(int i=0;i<src->degree;i++){
 		dest->coeffs[i] = c*src->coeffs[i];
 		c--;
 	}
+}
+
+void npoly_free(struct npoly* poly){
+	if(!poly) return;
+	if(poly->coeffs){
+		free(poly->coeffs);
+	}
+	return;
 }
