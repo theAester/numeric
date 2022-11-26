@@ -14,9 +14,13 @@ double nln_er(double num, double max_err, struct nreport* report){
 	int n =0;
 	{
 		double ee = 1/M_E;
-		while(num > ee){
+		while(num > 1){
 			num /= M_E;
 			n++;
+		}
+		while(num < ee){
+			num *= M_E;
+			n--;
 		}
 	}
 	if(num == 1) return (double)n;
