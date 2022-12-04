@@ -64,18 +64,14 @@ extern void npoly_add_ex(struct npoly*, struct npoly*, struct npoly*);
 extern void npoly_add(struct npoly*, struct npoly*);
 extern void npoly_free(struct npoly*);
 
-struct cb_args{
-	void* data;
-	int len; // size of data in bytes;
-};
 //TODO:
 //more poly functions (add, mul, combine, FFT maybe?)
-extern double ncomp_newton(double(*fun)(double, struct cb_args), double(*dfun)(double, struct cb_args), 
-		struct cb_args, double);
-extern double ncomp_newton_r(double(*fun)(double, struct cb_args), double(*dfun)(double, struct cb_args), 
-		struct cb_args, double, double);
-extern double ncomp_newton_er(double(*fun)(double, struct cb_args), double(*dfun)(double, struct cb_args), 
-		struct cb_args, double, double, struct nreport*);
+extern double ncomp_newton(double(*fun)(double, void*), double(*dfun)(double, void*), 
+		void*, double);
+extern double ncomp_newton_r(double(*fun)(double, void*), double(*dfun)(double, void*), 
+		void*, double, double);
+extern double ncomp_newton_er(double(*fun)(double, void*), double(*dfun)(double, void*), 
+		void*, double, double, struct nreport*);
 //ncomp_iteration
 
 #endif
