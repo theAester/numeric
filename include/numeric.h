@@ -50,28 +50,5 @@ extern double ncosh(double);
 extern double ncosh_e(double, double);
 extern double ncosh_er(double, double, struct nreport*);
 
-struct npoly{
-	double* coeffs;
-	int degree;
-};
-
-extern void npoly_fill(struct npoly*, int, ...);
-extern void npoly_create(struct npoly*, int);
-extern void npoly_derive(struct npoly*, struct npoly*);
-extern void npolycpy(struct npoly*, struct npoly*);
-extern double npoly_eval(struct npoly*, double);
-extern void npoly_add_ex(struct npoly*, struct npoly*, struct npoly*);
-extern void npoly_add(struct npoly*, struct npoly*);
-extern void npoly_free(struct npoly*);
-
-//TODO:
-//more poly functions (add, mul, combine, FFT maybe?)
-extern double ncomp_newton(double(*fun)(double, void*), double(*dfun)(double, void*), 
-		void*, double);
-extern double ncomp_newton_r(double(*fun)(double, void*), double(*dfun)(double, void*), 
-		void*, double, double);
-extern double ncomp_newton_er(double(*fun)(double, void*), double(*dfun)(double, void*), 
-		void*, double, double, struct nreport*);
-//ncomp_iteration
 
 #endif

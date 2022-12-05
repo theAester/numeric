@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include "numeric.h"
+#include "poly/poly.h"
 
 void npoly_fill(struct npoly* poly, int degree, ...){
 	va_list vl;

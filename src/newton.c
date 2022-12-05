@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "numeric.h"
+#include "solv/solv.h"
 
 double ncomp_newton(double(*fun)(double, void*), double(*dfun)(double, void*), 
 					void* cba, double init){
@@ -30,4 +31,5 @@ double ncomp_newton_er(double(*fun)(double, void*), double(*dfun)(double, void*)
 	}
 	return xx;
 }
+
 
