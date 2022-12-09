@@ -11,6 +11,8 @@
 #define ABS(x) fabs(x)
 #endif
 
+#define ITT_MAX 512
+
 struct nreport{
 	double error;
 	int iterations;
