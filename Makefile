@@ -1,4 +1,4 @@
-NAME = calc.c
+NAME = calc
 
 all: lib/numeric.so
 	gcc -g $(NAME).c lib/numeric.so -Iinclude/ -o build/$(NAME) 

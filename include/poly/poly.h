@@ -15,6 +15,12 @@ extern void npoly_add_ex(struct npoly*, struct npoly*, struct npoly*);
 extern void npoly_add(struct npoly*, struct npoly*);
 extern void npoly_free(struct npoly*);
 
+// interpolation
+
+extern double npoly_lagrange_interpol(double, double[][2], int);
+extern double npoly_newton_interpol(double, double[][2], int);
+extern double npoly_neville_interpol(double, double[][2], int);
+
 //TODO:
 //more poly functions (add, mul, combine, FFT maybe?)
 

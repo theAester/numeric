@@ -89,3 +89,73 @@ void npoly_free(struct npoly* poly){
 	}
 	return;
 }
+
+double npoly_lagrange_interpol(double x, double list[][2], int n){
+	if(n<=0) return NAN;
+	for(int i=0;i<n;i++){
+		if(list[i][0] == x) return list[i][1];
+	}
+	double A = 1.0;
+	double B[n];
+	double ans = 0;
+	for (int i=0;i<n;i++){
+		A *= (x-list[i][0]);
+		B[i] = (x-list[i][0]);
+		for(int j=0;j<n;j++){
+			if(i==j) continue;
+			B[i] *= (list[i][0]-list[j][0]);
+		}
+	}
+	for(int i=0;i<n;i++){
+		ans += A*list[i][1]/B[i];
+	}
+	return ans;
+}
+
+double npoly_newton_interpol(double x, double list[][2], int n){
+	int tab_bytes = n*(n+1)*sizeof(double)/2;
+	double* table = malloc(tab_bytes);
+	for(int j=0;j<n;j++){
+		table[j] = list[j][1];
+	}
+	int window_size = n;
+	int curind = 0;
+	for(int i=1;i<n;i++){
+		for(int j=0;j<window_size-1;j++){
+			table[curind+window_size+j] =  (table[curind+j] - table[curind+j+1])
+															/
+												(list[j][0] - list[j+i][0]);
+		}	
+		curind += window_size--;
+	}
+	double ans = 0;
+	curind =0;
+	window_size = n;
+	double fac = 1;
+	for(int i=0;i<n;i++){
+		ans += table[curind]*fac;
+		fac *= (x - list[i][0]);
+		curind += window_size--;
+	}
+	free(table);
+	return ans;
+}
+
+double npoly_neville_interpol(double x, double list[][2], int n){
+	int tab_bytes = n*(n+1)*sizeof(double)/2;
+	double* table = malloc(tab_bytes);
+	for(int j=0;j<n;j++){
+		table[j] = list[j][1];
+	}
+	int window_size = n;
+	int curind = 0;
+	for(int i=1;i<n;i++){
+		for(int j=0;j<window_size-1;j++){
+			table[curind+window_size+j] = ((x-list[j][0])*table[curind+j+1] - (x-list[j+i][0])*table[curind+j])
+																			/
+																(list[j][0] - list[j+i][0]);
+		}
+		curind += window_size--;
+	}
+	return table[n*(n+1)/2 -1];
+}
