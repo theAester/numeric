@@ -3,6 +3,30 @@
 
 #ifdef _CUDA_EN_
 
+__host__ double nint_simpson(double (*func)(double x, void* arg), void* args, int n, double a, double b){
+	if(n == 0) return 0;
+	if(a == b) return 0;
+	double coeff = 1;
+	if(b < a){
+		double temp = a;
+		a = b;
+		b = temp;
+		coeff = -1;
+	}
+	double h = (b-a)/n;
+	double* h_d, val;
+	cudaMalloc(&h_d, sizeof(double));
+	cudaMemcpy(h_d, &h, sizeof(double), cudaMemcpyHostToDevice);
+	
+	const int num_th = DIFF_NUM_TH;
+	const int num_bl = n/DIFF_NUM_TH + 1;
+	double* mem = 
+	nint_simpson_ker<<<num_bl, num_th>>>(func, arg_d, h_d, mem);
+	reduce<<<1, num_bl>>>(mem, val_d);
+}
+
+#else
+
 double nint_trapezoid(double (*func)(double x, void* arg), void* args, int n, double a, double b){
 	if(n == 0) return 0;
 	if(a == b) return 0;
@@ -43,30 +67,6 @@ double nint_simpson(double (*func)(double x, void* arg), void* args, int n, doub
 		mult = (mult == 2 ? 4 : 2);
 	}
 	return coeff*ans*h/3.0;
-}
-
-#else
-
-__host__ double nint_simpson(double (*func)(double x, void* arg), void* args, int n, double a, double b){
-	if(n == 0) return 0;
-	if(a == b) return 0;
-	double coeff = 1;
-	if(b < a){
-		double temp = a;
-		a = b;
-		b = temp;
-		coeff = -1;
-	}
-	double h = (b-a)/n;
-	double* h_d, val;
-	cudaMalloc(&h_d, sizeof(double));
-	cudaMemcpy(h_d, &h, sizeof(double), cudaMemcpyHostToDevice);
-	
-	const int num_th = DIFF_NUM_TH;
-	const int num_bl = n/DIFF_NUM_TH + 1;
-	double* mem = 
-	nint_simpson_ker<<<num_bl, num_th>>>(func, arg_d, h_d, mem);
-	reduce<<<1, num_bl>>>(mem, val_d);
 }
 
 #endif /* _CUDA_EN_ */

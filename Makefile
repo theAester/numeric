@@ -1,7 +1,7 @@
 NAME = calc
 
 all: lib/numeric.so
-	gcc -g $(NAME).c lib/numeric.so -Iinclude/ -o build/$(NAME) 
+	gcc -g $(NAME).c lib/numeric.so -Iinclude/ -o build/$(NAME) -lm
 
 lib/numeric.so:
 	gcc -g --shared src/*.c -Iinclude/ -o lib/numeric.so -lm
