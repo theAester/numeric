@@ -2,6 +2,17 @@
 #include "numeric.h"
 #include "ode/ode.h"
 
+int node_dsolve_euler(double (*F)(double x, double y, void* arg), void* args, double h, double x, double y0, int n, double* list){
+	list[0] = y0;
+	for(int i=1;i<n;i++){
+		double res = node_dstep_euler(F, args, h, x, list[i-1]);
+		if(isnan(res) || isinf(res)){ return i; }
+		list[i] = res;	
+		x += h;
+	}
+	return n;
+}
+
 int node_dsolve_RK2(double (*F)(double x, double y, void* arg), void* args, double h, double x, double y0, int n, double* list){
 	list[0] = y0;
 	for(int i=1;i<n;i++){
@@ -33,6 +44,10 @@ int node_dsolve_RK4(double (*F)(double x, double y, void* arg), void* args, doub
 		x += h;
 	}
 	return n;
+}
+
+double node_dstep_euler(double (*F)(double x, double y, void* arg), void* args, double h, double x, double y0){
+	return y0 + h * F(x, y0, args);
 }
 
 double node_dstep_RK2(double (*F)(double x, double y, void* arg), void* args, double h, double x, double y0){
